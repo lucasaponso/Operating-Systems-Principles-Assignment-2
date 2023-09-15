@@ -13,7 +13,7 @@ void run(queue<pcb>& processes)
         pcb& currentProcess = processes.front(); // Use a reference instead of copying
         processes.pop();
 
-        cout << "PID " << currentProcess.id << ", BT: " << currentProcess.burst_time;
+        cout << "PID " << currentProcess.id << ", Burst Time: " << currentProcess.burst_time;
         currentTime += currentProcess.burst_time;
 
         int turnaroundTime = currentTime;
@@ -23,12 +23,12 @@ void run(queue<pcb>& processes)
         totalTurnaroundTime += turnaroundTime;
         totalWaitingTime += waitingTime;
 
-        cout << ", RT: " << responseTime << " TT: " << turnaroundTime << " WT: " << waitingTime << endl;
+        cout << ", Response Time: " << responseTime << " Turnaround Time: " << turnaroundTime << " Waiting Time: " << waitingTime << endl;
     }
 
     double avgTurnaroundTime = static_cast<double>(totalTurnaroundTime) / numProcesses;
     double avgWaitingTime = static_cast<double>(totalWaitingTime) / numProcesses;
 
-    cout << "AVG TT: " << avgTurnaroundTime << endl;
-    cout << "AVG WT: " << avgWaitingTime << endl;
+    cout << "Average Turnaround Time: " << avgTurnaroundTime << endl;
+    cout << "Average Waiting Time " << avgWaitingTime << endl;
 }
