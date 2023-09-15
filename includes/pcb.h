@@ -1,5 +1,8 @@
 #include <iostream>
 #include <queue>
+#include <fstream>
+#include <queue>
+#include <string>
 #include "types.h"
 
 #pragma once

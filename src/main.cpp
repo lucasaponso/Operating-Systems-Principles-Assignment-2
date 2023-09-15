@@ -1,9 +1,10 @@
 #include "../includes/Loader.h"
 #include "../includes/pcb.h"
-#include "../includes/fifo.h"
+#include "../includes/algorithms.h"
 #include <iostream>
 #include <fstream>
 #include <queue>
+#include <string>
 
 using std::string;
 using std::endl;
@@ -16,10 +17,11 @@ int main(int argc, char* argv[])
 {
     if (argc < 2 || argc > 3) 
     {
-        cerr << "Usage: " << argv[0] << " <filename>" << endl;
+        cerr << "Usage: " << argv[0] << " <scheduling_algorithm> <filename> [timeQuantum]" << endl;
         return 1;
     }
 
+    string algorithm = argv[0];
     string filename = argv[1];
     ifstream inputFile(filename);
 
@@ -30,7 +32,21 @@ int main(int argc, char* argv[])
     }
 
     queue<pcb> processes = Loader::readFile(filename);
-    run(processes);
+
+    if (algorithm == "./fifo") {
+        run_fifo(processes);
+    } 
+    else if (algorithm == "./sjf") {
+        run_sjf(processes);
+    } 
+    else if (algorithm == "./rr" && argc == 3) {
+        int timeQuantum = std::stoi(argv[2]);
+        run_rr(processes, timeQuantum);
+    } 
+    else {
+        cerr << "Invalid or missing arguments." << endl;
+        return 1;
+    }
 
     return 0;
 }

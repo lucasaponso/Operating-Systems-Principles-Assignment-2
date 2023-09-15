@@ -1,16 +1,50 @@
-#include "../includes/pcb.h"
-#include "../includes/sjf.h"
-#include <iostream>
-#include <vector>
-#include <queue>
-#include <algorithm>
+#include "../includes/algorithms.h"
+
+void run_fifo(queue<pcb>& processes) 
+{
+    int currentTime = 0;
+    int totalTurnaroundTime = 0;
+    int totalWaitingTime = 0;
+    int numProcesses = processes.size(); 
+
+    while (!processes.empty()) 
+    {
+        pcb& currentProcess = processes.front(); // Use a reference instead of copying
+        processes.pop();
+
+        cout << "PID " << currentProcess.id << ", Burst Time: " << currentProcess.burst_time;
+        currentTime += currentProcess.burst_time;
+
+        int turnaroundTime = currentTime;
+        int waitingTime = turnaroundTime - currentProcess.burst_time;
+        int responseTime = waitingTime;
+
+        totalTurnaroundTime += turnaroundTime;
+        totalWaitingTime += waitingTime;
+
+        cout << ", Response Time: " << responseTime << " Turnaround Time: " << turnaroundTime << " Waiting Time: " << waitingTime << endl;
+    }
+
+    double avgTurnaroundTime = static_cast<double>(totalTurnaroundTime) / numProcesses;
+    double avgWaitingTime = static_cast<double>(totalWaitingTime) / numProcesses;
+
+    cout << "Average Turnaround Time: " << avgTurnaroundTime << endl;
+    cout << "Average Waiting Time " << avgWaitingTime << endl;
+}
+
+
+void run_rr(std::queue<pcb>& processes, int timeQuantum) 
+{
+    std::cout << timeQuantum << std::endl;
+}
+
 
 bool compareByBurstTime(const pcb& a, const pcb& b) 
 {
     return a.burst_time < b.burst_time;
 }
 
-void run(std::queue<pcb>& processes) 
+void run_sjf(std::queue<pcb>& processes) 
 {
     std::vector<pcb> processVector;
     int currentTime = 0;
