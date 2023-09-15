@@ -1,5 +1,5 @@
-#ifndef PCB_FUNCTIONS_H
-#define PCB_FUNCTIONS_H
+#ifndef RR_FUNCTIONS_H
+#define RR_FUNCTIONS_H
 //includes local & system files
 #include "pcb.h"
 #include <queue>
@@ -13,4 +13,4 @@ using std::endl;
 //method to run the simulator
 void run(std::queue<pcb>& processes);
 
-#endif // PCB_FUNCTIONS_H
+#endif // RR_FUNCTIONS_H
