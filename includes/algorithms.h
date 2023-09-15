@@ -1,10 +1,6 @@
 #ifndef ALGO_FUNCTIONS_H
 #define ALGO_FUNCTIONS_H
 #include "pcb.h"
-#include <queue>
-#include <iostream>
-#include <vector>
-#include <algorithm>
 using std::cout;
 using std::endl;
 using std::queue;

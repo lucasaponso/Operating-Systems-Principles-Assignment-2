@@ -2,13 +2,6 @@
 #define FILE_READER_H
 
 #include "pcb.h"
-#include <string>
-#include <vector>
-#include <map>
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <queue>
 using std::queue;
 using std::vector;
 using std::map;

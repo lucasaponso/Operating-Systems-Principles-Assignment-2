@@ -35,7 +35,27 @@ void run_fifo(queue<pcb>& processes)
 
 void run_rr(std::queue<pcb>& processes, int timeQuantum) 
 {
-    std::cout << timeQuantum << std::endl;
+    std::queue<pcb> readyQueue = processes;
+    int remainingTime = 0;
+
+    while (!readyQueue.empty()) {
+        pcb currentProcess = readyQueue.front();
+        readyQueue.pop();
+
+        if (currentProcess.burst_time <= timeQuantum) {
+            remainingTime = currentProcess.burst_time;
+        } else {
+            remainingTime = timeQuantum;
+        }
+
+        currentProcess.burst_time -= remainingTime;
+
+        if (currentProcess.burst_time <= 0) {
+            std::cout << "Process " << currentProcess.id << " completed." << std::endl;
+        } else {
+            readyQueue.push(currentProcess);
+        }
+    }
 }
 
 

@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
 {
     if (argc < 2 || argc > 3) 
     {
-        cerr << "Usage: " << argv[0] << " <scheduling_algorithm> <filename> [timeQuantum]" << endl;
+        cerr << "Usage: " << argv[0] << "<filename> [timeQuantum]" << endl;
         return 1;
     }
 
@@ -33,17 +33,21 @@ int main(int argc, char* argv[])
 
     queue<pcb> processes = Loader::readFile(filename);
 
-    if (algorithm == "./fifo") {
+    if (algorithm == "./fifo") 
+    {
         run_fifo(processes);
     } 
-    else if (algorithm == "./sjf") {
+    else if (algorithm == "./sjf") 
+    {
         run_sjf(processes);
     } 
-    else if (algorithm == "./rr" && argc == 3) {
+    else if (algorithm == "./rr" && argc == 3) 
+    {
         int timeQuantum = std::stoi(argv[2]);
         run_rr(processes, timeQuantum);
     } 
-    else {
+    else 
+    {
         cerr << "Invalid or missing arguments." << endl;
         return 1;
     }
