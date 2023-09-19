@@ -41,27 +41,49 @@ void run_fifo(queue<pcb>& processes)
 void run_rr(std::queue<pcb>& processes, int timeQuantum) 
 {
     std::queue<pcb> readyQueue = processes;
-    int remainingTime = 0;
+    int currentTime = 0;
+    int totalTurnaroundTime = 0;
+    int totalWaitingTime = 0;
+    int totalResponseTime = 0;  // Initialize a variable to store the total response time
+    int numProcesses = readyQueue.size();  // Number of processes in the queue
 
     while (!readyQueue.empty()) {
         pcb currentProcess = readyQueue.front();
         readyQueue.pop();
 
-        if (currentProcess.burst_time <= timeQuantum) {
-            remainingTime = currentProcess.burst_time;
-        } else {
-            remainingTime = timeQuantum;
-        }
+        int responseTime = currentTime; // Calculate the response time
 
-        currentProcess.burst_time -= remainingTime;
+        if (currentProcess.burst_time <= timeQuantum) {
+            currentTime += currentProcess.burst_time;
+            int turnaroundTime = currentTime;
+            int waitingTime = turnaroundTime - currentProcess.burst_time;
+
+            totalTurnaroundTime += turnaroundTime;
+            totalWaitingTime += waitingTime;
+            totalResponseTime += responseTime;  // Update the total response time
+
+            std::cout << "PID " << currentProcess.id << ", Burst Time: " << currentProcess.burst_time;
+            std::cout << ", Response Time: " << responseTime << " Turnaround Time: " << turnaroundTime << " Waiting Time: " << waitingTime << std::endl;
+        } else {
+            currentTime += timeQuantum;
+            currentProcess.burst_time -= timeQuantum;
+            readyQueue.push(currentProcess);
+        }
 
         if (currentProcess.burst_time <= 0) {
             std::cout << "Process " << currentProcess.id << " completed." << std::endl;
-        } else {
-            readyQueue.push(currentProcess);
         }
     }
+
+    double avgTurnaroundTime = static_cast<double>(totalTurnaroundTime) / numProcesses;
+    double avgWaitingTime = static_cast<double>(totalWaitingTime) / numProcesses;
+    double avgResponseTime = static_cast<double>(totalResponseTime) / numProcesses;  // Calculate the average response time
+
+    std::cout << "Average Turnaround Time: " << avgTurnaroundTime << std::endl;
+    std::cout << "Average Waiting Time: " << avgWaitingTime << std::endl;
+    std::cout << "Average Response Time: " << avgResponseTime << std::endl;  // Print the average response time
 }
+
 
 
 bool compareByBurstTime(const pcb& a, const pcb& b) 
