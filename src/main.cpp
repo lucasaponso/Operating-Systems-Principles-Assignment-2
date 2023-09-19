@@ -1,10 +1,6 @@
 #include "../includes/Loader.h"
 #include "../includes/pcb.h"
 #include "../includes/algorithms.h"
-#include <iostream>
-#include <fstream>
-#include <queue>
-#include <string>
 
 using std::string;
 using std::endl;
