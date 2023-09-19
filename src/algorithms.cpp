@@ -5,12 +5,12 @@ void run_fifo(queue<pcb>& processes)
     int currentTime = 0;
     int totalTurnaroundTime = 0;
     int totalWaitingTime = 0;
-    int totalResponseTime = 0;  // Initialize a variable to store the total response time
+    int totalResponseTime = 0;
     int numProcesses = processes.size(); 
 
     while (!processes.empty()) 
     {
-        pcb& currentProcess = processes.front(); // Use a reference instead of copying
+        pcb& currentProcess = processes.front();
         processes.pop();
 
         cout << "PID " << currentProcess.id << ", Burst Time: " << currentProcess.burst_time;
@@ -18,22 +18,22 @@ void run_fifo(queue<pcb>& processes)
 
         int turnaroundTime = currentTime;
         int waitingTime = turnaroundTime - currentProcess.burst_time;
-        int responseTime = waitingTime; // Calculate the correct response time
+        int responseTime = waitingTime;
 
         totalTurnaroundTime += turnaroundTime;
         totalWaitingTime += waitingTime;
-        totalResponseTime += responseTime;  // Update the total response time
+        totalResponseTime += responseTime;
 
         cout << ", Response Time: " << responseTime << " Turnaround Time: " << turnaroundTime << " Waiting Time: " << waitingTime << endl;
     }
 
     double avgTurnaroundTime = static_cast<double>(totalTurnaroundTime) / numProcesses;
     double avgWaitingTime = static_cast<double>(totalWaitingTime) / numProcesses;
-    double avgResponseTime = static_cast<double>(totalResponseTime) / numProcesses;  // Calculate the average response time
+    double avgResponseTime = static_cast<double>(totalResponseTime) / numProcesses;
 
     cout << "Average Turnaround Time: " << avgTurnaroundTime << endl;
     cout << "Average Waiting Time: " << avgWaitingTime << endl;
-    cout << "Average Response Time: " << avgResponseTime << endl;  // Print the average response time
+    cout << "Average Response Time: " << avgResponseTime << endl;
 }
 
 
@@ -44,14 +44,14 @@ void run_rr(std::queue<pcb>& processes, int timeQuantum)
     int currentTime = 0;
     int totalTurnaroundTime = 0;
     int totalWaitingTime = 0;
-    int totalResponseTime = 0;  // Initialize a variable to store the total response time
-    int numProcesses = readyQueue.size();  // Number of processes in the queue
+    int totalResponseTime = 0;
+    int numProcesses = readyQueue.size(); 
 
     while (!readyQueue.empty()) {
         pcb currentProcess = readyQueue.front();
         readyQueue.pop();
 
-        int responseTime = currentTime; // Calculate the response time
+        int responseTime = currentTime;
 
         if (currentProcess.burst_time <= timeQuantum) {
             currentTime += currentProcess.burst_time;
@@ -60,7 +60,7 @@ void run_rr(std::queue<pcb>& processes, int timeQuantum)
 
             totalTurnaroundTime += turnaroundTime;
             totalWaitingTime += waitingTime;
-            totalResponseTime += responseTime;  // Update the total response time
+            totalResponseTime += responseTime;
 
             std::cout << "PID " << currentProcess.id << ", Burst Time: " << currentProcess.burst_time;
             std::cout << ", Response Time: " << responseTime << " Turnaround Time: " << turnaroundTime << " Waiting Time: " << waitingTime << std::endl;
@@ -77,11 +77,11 @@ void run_rr(std::queue<pcb>& processes, int timeQuantum)
 
     double avgTurnaroundTime = static_cast<double>(totalTurnaroundTime) / numProcesses;
     double avgWaitingTime = static_cast<double>(totalWaitingTime) / numProcesses;
-    double avgResponseTime = static_cast<double>(totalResponseTime) / numProcesses;  // Calculate the average response time
+    double avgResponseTime = static_cast<double>(totalResponseTime) / numProcesses;  
 
     std::cout << "Average Turnaround Time: " << avgTurnaroundTime << std::endl;
     std::cout << "Average Waiting Time: " << avgWaitingTime << std::endl;
-    std::cout << "Average Response Time: " << avgResponseTime << std::endl;  // Print the average response time
+    std::cout << "Average Response Time: " << avgResponseTime << std::endl;
 }
 
 
@@ -97,7 +97,7 @@ void run_sjf(std::queue<pcb>& processes)
     int currentTime = 0;
     int totalTurnaroundTime = 0;
     int totalWaitingTime = 0;
-    int totalResponseTime = 0;  // Initialize a variable to store the total response time
+    int totalResponseTime = 0;
 
     while (!processes.empty()) 
     {
@@ -111,13 +111,13 @@ void run_sjf(std::queue<pcb>& processes)
     
     for (const auto& p : processVector) 
     {
-        int responseTime = currentTime; // Calculate the response time
+        int responseTime = currentTime; 
         int turnaroundTime = currentTime + p.burst_time;
         int waitingTime = currentTime;
 
         totalTurnaroundTime += turnaroundTime;
         totalWaitingTime += waitingTime;
-        totalResponseTime += responseTime;  // Update the total response time
+        totalResponseTime += responseTime;  
 
         std::cout << "ID: " << p.id << ", Burst Time: " << p.burst_time;
         std::cout << " Response Time: " << responseTime << " Turnaround Time: " << turnaroundTime << " Waiting Time: " << waitingTime << std::endl;
@@ -127,10 +127,10 @@ void run_sjf(std::queue<pcb>& processes)
 
     double avgTurnaroundTime = static_cast<double>(totalTurnaroundTime) / processVector.size();
     double avgWaitingTime = static_cast<double>(totalWaitingTime) / processVector.size();
-    double avgResponseTime = static_cast<double>(totalResponseTime) / processVector.size();  // Calculate the average response time
+    double avgResponseTime = static_cast<double>(totalResponseTime) / processVector.size();  
 
     std::cout << "Average Turnaround Time: " << avgTurnaroundTime << std::endl;
     std::cout << "Average Waiting Time: " << avgWaitingTime << std::endl;
-    std::cout << "Average Response Time: " << avgResponseTime << std::endl;  // Print the average response time
+    std::cout << "Average Response Time: " << avgResponseTime << std::endl; 
 }
 
