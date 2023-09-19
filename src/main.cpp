@@ -13,7 +13,8 @@ int main(int argc, char* argv[])
 {
     if (argc < 2 || argc > 3) 
     {
-        cerr << "Usage: " << argv[0] << "<filename> [timeQuantum]" << endl;
+        cerr << "Usage: " << argv[0] << " <algorithm> <filename> [timeQuantum]" << endl;
+        cerr << "Valid algorithms: fifo, sjf, rr" << endl;
         return 1;
     }
 
@@ -27,19 +28,20 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    queue<pcb> processes = Loader::readFile(filename);
-
-    if (algorithm == "./fifo") 
+    if (algorithm == "./fifo" && argc == 2) 
     {
+        queue<pcb> processes = Loader::readFile(filename);
         run_fifo(processes);
     } 
-    else if (algorithm == "./sjf") 
+    else if (algorithm == "./sjf" && argc == 2) 
     {
+        queue<pcb> processes = Loader::readFile(filename);
         run_sjf(processes);
     } 
     else if (algorithm == "./rr" && argc == 3) 
     {
         int timeQuantum = std::stoi(argv[2]);
+        queue<pcb> processes = Loader::readFile(filename);
         run_rr(processes, timeQuantum);
     } 
     else 
